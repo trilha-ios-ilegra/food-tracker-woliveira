@@ -35,6 +35,9 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sOH-Ej-Rog">
                                         <rect key="frame" x="0.0" y="66.5" width="343" height="30"/>
                                         <state key="normal" title="Limpar caixa de texto"/>
+                                        <connections>
+                                            <action selector="setDefaulLabelText:" destination="BYZ-38-t0r" eventType="touchUpInside" id="NnS-er-IgB"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                             </stackView>
@@ -47,6 +50,10 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
+                    <connections>
+                        <outlet property="mealNameLabel" destination="mHx-2u-OzQ" id="Wac-He-CCs"/>
+                        <outlet property="nameTextField" destination="1wT-I5-uIH" id="xN8-pf-7s8"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
