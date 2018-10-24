@@ -63,13 +63,17 @@ import UIKit
         
         for index in 0..<starCount {
             
-            createButton(emptyStar: emptyStar!, filledStar: filledStar!, highlightedStar: highlightedStar!, index: index)
+            let button = createButton(emptyStar: emptyStar!, filledStar: filledStar!, highlightedStar: highlightedStar!, index: index)
+            
+            addArrangedSubview(button)
+            
+            ratingButtons.append(button)
             
             updateButtonSelectionStates()
         }
     }
     
-    private func createButton(emptyStar: UIImage, filledStar: UIImage, highlightedStar: UIImage, index: Int) {
+    private func createButton(emptyStar: UIImage, filledStar: UIImage, highlightedStar: UIImage, index: Int) -> UIButton {
         
         let button = UIButton()
         
@@ -86,10 +90,8 @@ import UIKit
         
         button.addTarget(self, action: #selector(RatingControl.ratingButtonTapped(button:)), for: .touchUpInside)
         
-        addArrangedSubview(button)
-        
-        ratingButtons.append(button)
-        
+        return button
+
     }
 
     private func loadImages() -> (UIImage?, UIImage?, UIImage?) {
