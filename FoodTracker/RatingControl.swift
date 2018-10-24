@@ -30,9 +30,6 @@ import UIKit
         }
     }
     
-    
-    
-
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupButtons()
@@ -41,44 +38,6 @@ import UIKit
     required init(coder: NSCoder) {
         super.init(coder: coder)
         setupButtons()
-    }
-    
-    private func setupButtons() {
-        
-        for button in ratingButtons {
-            removeArrangedSubview(button)
-            button.removeFromSuperview()
-        }
-        ratingButtons.removeAll()
-        
-        let bundle = Bundle(for: type(of: self))
-        let filledStar = UIImage(named: "filledStar", in: bundle, compatibleWith: self.traitCollection)
-        let emptyStar = UIImage(named: "emptyStar", in: bundle, compatibleWith: self.traitCollection)
-        let highlightedStar = UIImage(named: "highlightedStar", in: bundle, compatibleWith: self.traitCollection)
-        
-        for index in 0..<starCount{
-            
-            let button = UIButton()
-        
-            button.setImage(filledStar, for: .selected)
-            button.setImage(emptyStar, for: .normal)
-            button.setImage(highlightedStar, for: .highlighted)
-            button.setImage(highlightedStar, for: [.highlighted, .selected])
-            
-            button.translatesAutoresizingMaskIntoConstraints = false
-            button.heightAnchor.constraint(equalToConstant: starSize.height).isActive = true
-            button.widthAnchor.constraint(equalToConstant: starSize.width).isActive = true
-            
-            button.accessibilityLabel = "Set \(index + 1) star rating"
-        
-            button.addTarget(self, action: #selector(RatingControl.ratingButtonTapped(button:)), for: .touchUpInside)
-        
-            addArrangedSubview(button)
-            
-            ratingButtons.append(button)
-            
-            updateButtonSelectionStates()
-        }
     }
     
     @objc func ratingButtonTapped(button: UIButton) {
@@ -96,6 +55,62 @@ import UIKit
         }
     }
     
+    private func setupButtons() {
+        
+        let (emptyStar, filledStar, highlightedStar) = loadImages()
+        
+        clearButton()
+        
+        for index in 0..<starCount {
+            
+            createButton(emptyStar: emptyStar!, filledStar: filledStar!, highlightedStar: highlightedStar!, index: index)
+            
+            updateButtonSelectionStates()
+        }
+    }
+    
+    private func createButton(emptyStar: UIImage, filledStar: UIImage, highlightedStar: UIImage, index: Int) {
+        
+        let button = UIButton()
+        
+        button.setImage(filledStar, for: .selected)
+        button.setImage(emptyStar, for: .normal)
+        button.setImage(highlightedStar, for: .highlighted)
+        button.setImage(highlightedStar, for: [.highlighted, .selected])
+        
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.heightAnchor.constraint(equalToConstant: starSize.height).isActive = true
+        button.widthAnchor.constraint(equalToConstant: starSize.width).isActive = true
+        
+        button.accessibilityLabel = "Set \(index + 1) star rating"
+        
+        button.addTarget(self, action: #selector(RatingControl.ratingButtonTapped(button:)), for: .touchUpInside)
+        
+        addArrangedSubview(button)
+        
+        ratingButtons.append(button)
+        
+    }
+
+    private func loadImages() -> (UIImage?, UIImage?, UIImage?) {
+        
+        let filledStar = UIImage(named: "filledStar")
+        let emptyStar = UIImage(named: "emptyStar")
+        let highlightedStar = UIImage(named: "highlightedStar")
+        
+        return (emptyStar, filledStar, highlightedStar)
+    }
+    
+    private func clearButton() {
+        
+        for button in ratingButtons {
+            removeArrangedSubview(button)
+            button.removeFromSuperview()
+        }
+        ratingButtons.removeAll()
+        
+    }
+ 
     private func updateButtonSelectionStates() {
         
         let valueString: String
@@ -125,23 +140,4 @@ import UIKit
             
         }
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    /*
-    // Only override draw() if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func draw(_ rect: CGRect) {
-        // Drawing code
-    }
-    */
 }
