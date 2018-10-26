@@ -2,8 +2,8 @@
 //  RatingControl.swift
 //  FoodTracker
 //
-//  Created by Walter Oliveira on 22/10/18.
-//  Copyright © 2018 Walter Oliveira. All rights reserved.
+//  Created by Jane Appleseed on 11/2/16.
+//  Copyright © 2016 Apple Inc. All rights reserved.
 //
 
 import UIKit
@@ -91,9 +91,9 @@ import UIKit
         button.addTarget(self, action: #selector(RatingControl.ratingButtonTapped(button:)), for: .touchUpInside)
         
         return button
-
+        
     }
-
+    
     private func loadImages() -> (UIImage?, UIImage?, UIImage?) {
         
         let filledStar = UIImage(named: "filledStar")
@@ -112,7 +112,7 @@ import UIKit
         ratingButtons.removeAll()
         
     }
- 
+    
     private func updateButtonSelectionStates() {
         
         let valueString: String
@@ -127,7 +127,7 @@ import UIKit
         
         for (index, button) in ratingButtons.enumerated(){
             
-           button.isSelected = index < rating
+            button.isSelected = index < rating
             
             let hintString: String?
             
@@ -136,7 +136,7 @@ import UIKit
             } else {
                 hintString = nil
             }
-
+            
             button.accessibilityHint = hintString
             button.accessibilityValue = valueString
             
