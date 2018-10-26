@@ -77,29 +77,33 @@ class MealTableViewController: UITableViewController {
         super.prepare(for: segue, sender: sender)
         
         switch(segue.identifier ?? "") {
-            
         case "AddItem":
             os_log("Adding a new meal.", log: OSLog.default, type: .debug)
             
         case "ShowDetail":
-            guard let mealDetailViewController = segue.destination as? MealViewController else {
-                fatalError("Unexpected destination: \(segue.destination)")
-            }
             
-            guard let selectedMealCell = sender as? MealTableViewCell else {
-                fatalError("Unexpected sender: \(sender)")
-            }
-            
-            guard let indexPath = tableView.indexPath(for: selectedMealCell) else {
-                fatalError("The selected cell is not being displayed by the table")
-            }
-            
-            let selectedMeal = meals[indexPath.row]
-            mealDetailViewController.meal = selectedMeal
+            showDetail(for: segue, sender: sender)
             
         default:
             fatalError("Unexpected Segue Identifier; \(segue.identifier)")
         }
+    }
+    
+    private func showDetail(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let mealDetailViewController = segue.destination as? MealViewController else {
+            fatalError("Unexpected destination: \(segue.destination)")
+        }
+        
+        guard let selectedMealCell = sender as? MealTableViewCell else {
+            fatalError("Unexpected sender: \(sender)")
+        }
+        
+        guard let indexPath = tableView.indexPath(for: selectedMealCell) else {
+            fatalError("The selected cell is not being displayed by the table")
+        }
+        
+        let selectedMeal = meals[indexPath.row]
+        mealDetailViewController.meal = selectedMeal
     }
     
     @IBAction func unwindToMealList(sender: UIStoryboardSegue) {
